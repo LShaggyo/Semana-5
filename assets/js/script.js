@@ -8,7 +8,8 @@ const propertyTemplate =
     bathrooms: '',
     price: '',
     smoke: false,
-    pets: false
+    pets: false,
+    type: ''
 }
 
 const properties = {
@@ -54,10 +55,45 @@ properties.sale.push({
 });
 
 properties.rent.push({
-    
+    ...propertyTemplate,
+    name: 'Apartamento en el centro de la ciudad',
+    src: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YXBhcnRtZW50fGVufDB8MHwwfHx8MA%3D%3D&auto=format&fit=crop&w=700&q=60',
+    description: 'Este apartamento de 2 habitaciones está ubicado en el corazón de la ciudad, cerca de todo.',
+    address: '123 Main Street, Anytown, CA 91234',
+    room: '2 Habitaciones',
+    bathrooms: '2 Baños',
+    price: '$2.000',
+    smoke: false,
+    pets: true
+},
+{
+    ...propertyTemplate,
+    name: 'Apartamento luminoso con vista al mar',
+    src: 'https://images.unsplash.com/photo-1669071192880-0a94316e6e09?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+    description: 'Este hermoso apartamento ofrece una vista impresionante al mar',
+    address: '456 Ocean Avenue, Seaside Town, CA 56789',
+    room: '3 Habitaciones',
+    bathrooms: '3 Baños',
+    price: '$2,500',
+    smoke: true,
+    pets: true
+},
+{
+    ...propertyTemplate,
+    name: 'Condominio moderno en zona residencial',
+    src: 'https://images.unsplash.com/photo-1567496898669-ee935f5f647a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGNvbmRvfGVufDB8MHwwfHx8MA%3D%3D&auto=format&fit=crop&w=1000&q=60',
+    description: 'Este elegante condominio moderno está ubicado en una tranquila zona residencial',
+    address: '789 Suburban Lane, Quietville, CA 34567',
+    room: '2 Habitaciones',
+    bathrooms: '2 Baños',
+    price: '$2,200',
+    smoke: false,
+    pets: false
+ 
 });
 
 
+// // Función para generar HTML para una propiedad
 function generatePropertyHtml(property) {
     return `
         <div class="col-md-4 mb-4">
@@ -86,14 +122,40 @@ function generatePropertyHtml(property) {
     `;
 }
 
+// Función para agregar propiedades al contenedor HTML
 function addPropertiesToContainer(propertiesArray, containerSelector) {
     const container = document.querySelector(containerSelector);
+    container.innerHTML = '';
     propertiesArray.forEach(property => {
         const propertyHtml = generatePropertyHtml(property);
         container.innerHTML += propertyHtml;
     });
 }
 
+// Función para agregar una nueva propiedad
+function addProperty() {
+    // Recoger datos del formulario
+    // Aquí deberías usar algo como new FormData() para recoger los datos del formulario
+    const newProperty = {
+        ...propertyTemplate,
+        // Completa los campos con los datos del formulario
+    };
+
+    if (newProperty.type === 'venta') {
+        properties.sale.push(newProperty);
+    } else if (newProperty.type === 'alquiler') {
+        properties.rent.push(newProperty);
+    }
+
+    // Actualizar el DOM
+    if (document.body.classList.contains('sale-page')) {
+        addPropertiesToContainer(properties.sale, '.property-container');
+    } else if (document.body.classList.contains('rent-page')) {
+        addPropertiesToContainer(properties.rent, '.property-container-rent');
+    }
+}
+
+// Evento cuando se carga el DOM
 document.addEventListener('DOMContentLoaded', () => {
     if (document.body.classList.contains('sale-page')) {
         addPropertiesToContainer(properties.sale, '.property-container');
