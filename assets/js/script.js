@@ -194,11 +194,10 @@ function generatePropertyHtml(property) {
 
 function addPropertiesToContainer(propertiesArray, containerSelector) {
     const container = document.querySelector(containerSelector);
-    propertiesArray.forEach(property => {
-        const propertyHtml = generatePropertyHtml(property);
-        container.innerHTML += propertyHtml;
-    });
-}
+    const propertyHtml = propertiesArray.map(property => generatePropertyHtml(property)).join('');
+    container.innerHTML = propertyHtml;
+};
+
 
 document.addEventListener('DOMContentLoaded', () => {    
     if (document.body.classList.contains('index-page')) {        
