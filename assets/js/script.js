@@ -200,20 +200,15 @@ function addPropertiesToContainer(propertiesArray, containerSelector) {
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Verificar en qué página estamos y agregar propiedades según corresponda
-    if (document.body.classList.contains('index-page')) {
-        // Página principal: Mostrar las primeras 3 propiedades de venta y alquiler
-        const firstThreeSaleProperties = properties.sale.slice(0, 3);
-        const firstThreeRentProperties = properties.rent.slice(0, 3);
-        
-        addPropertiesToContainer(firstThreeSaleProperties, '.sale'); // Agregar a la sección de venta
-        addPropertiesToContainer(firstThreeRentProperties, '.rent'); // Agregar a la sección de alquiler
-    } else if (document.body.classList.contains('sale-page')) {
-        // Página de venta: Mostrar todas las propiedades de venta
-        addPropertiesToContainer(properties.sale, '.property-container-sale'); // Agregar a la sección de venta
-    } else if (document.body.classList.contains('rent-page')) {
-        // Página de alquiler: Mostrar todas las propiedades de alquiler
-        addPropertiesToContainer(properties.rent, '.property-container-rent'); // Agregar a la sección de alquiler
+document.addEventListener('DOMContentLoaded', () => {    
+    if (document.body.classList.contains('index-page')) {        
+        const showSaleProperties = properties.sale.slice(0, 3);
+        const showRentProperties = properties.rent.slice(0, 3);        
+        addPropertiesToContainer(showSaleProperties, '.sale'); 
+        addPropertiesToContainer(showRentProperties, '.rent'); 
+    } else if (document.body.classList.contains('sale-page')) {        
+        addPropertiesToContainer(properties.sale, '.property-container-sale'); 
+    } else if (document.body.classList.contains('rent-page')) {        
+        addPropertiesToContainer(properties.rent, '.property-container-rent'); 
     }
 });
